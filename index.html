@@ -81,16 +81,39 @@
   #welcome {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: white;
+
+    /* 使用 bg.jpg 當背景並淡入 */
+    background: url('bg.jpg') no-repeat center center;
+    background-size: cover;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     z-index: 9999;
+
+    /* 初始透明 + 動畫 */
+    opacity: 0;
+    animation: fadeInBg 1.5s ease forwards;
   }
+
+  /* 歡迎頁背景淡入動畫 */
+  @keyframes fadeInBg {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* 提高文字與按鈕的層級，避免被背景遮住 */
+  #welcome h2, #welcome button {
+    position: relative;
+    z-index: 2;
+  }
+
   #welcome h2 {
     font-size: 22px;
     margin-bottom: 20px;
+    color: white; /* 白字更清楚 */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   }
   #welcome button {
     padding: 10px 20px;
@@ -101,6 +124,7 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   }
   </style>
 </head>
