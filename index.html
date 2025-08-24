@@ -231,6 +231,25 @@
           el.target = "_blank";
         }
       });
+      // 音樂自動播放控制（解決自動播放被禁止問題）
+    document.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      if (music) {
+        music.muted = false; // 確保不是靜音狀態
+        const playAttempt = music.play();
+    
+        if (playAttempt !== undefined) {
+          playAttempt
+            .then(() => {
+              console.log("✅ 背景音樂自動播放成功");
+            })
+            .catch((error) => {
+              console.warn("⚠️ 自動播放失敗，需使用者互動", error);
+            });
+        }
+      }
+    });
+
     }
   </script>
 </body>
