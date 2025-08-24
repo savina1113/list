@@ -77,6 +77,12 @@
     .btn.shake {
       animation: fadeInMoveUp 0.8s ease forwards, shake 0.6s ease-in-out infinite;
     }
+    .btn.active {
+      background-color: #FF5588; /* ← 你想要的開團顏色 */
+      color: white;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
@@ -186,11 +192,13 @@
             el.textContent = btn.name;
             el.classList.add("disabled");
             el.classList.remove("shake");
+            el.classList.remove("active");
             el.removeAttribute("href");
           } else if (now > endTime) {
             el.textContent = btn.name;
             el.classList.add("disabled");
             el.classList.remove("shake");
+            el.classList.remove("active");
             el.removeAttribute("href");
           } else {
             el.textContent = btn.name;
@@ -198,6 +206,7 @@
             el.target = "_blank";
             el.classList.remove("disabled");
             el.classList.add("shake");
+            el.classList.add("active");
           }
         } else {
           el.textContent = btn.name;
