@@ -15,79 +15,85 @@
     text-align: center;
   }
 
-    .container { padding: 20px; max-width: 500px; margin: auto; }
-    .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; margin-bottom: 10px; }
-    h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
-    .email { color: #2C2C2C; font-size: 14px; margin-bottom: 15px; }
-    .slogan { color: #2C2C2C; font-size: 16px; margin-top: 6px; line-height: 1.5; }
+  .container { padding: 20px; max-width: 500px; margin: auto; }
+  .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; margin-bottom: 10px; }
+  h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
+  .email { color: #2C2C2C; font-size: 14px; margin-bottom: 15px; }
+  .slogan { color: #2C2C2C; font-size: 16px; margin-top: 6px; line-height: 1.5; }
 
-    .countdown-wrapper { margin-top: 20px; }
-    .countdown-title { font-weight: bold; font-size: 18px; color: #2C2C2C; margin-bottom: 8px; }
-    .countdown-boxes {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .box {
-      background: white;
-      color: #2C2C2C;
-      padding: 10px 8px;
-      border-radius: 10px;
-      width: 48px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .box span { font-size: 20px; font-weight: bold; line-height: 1; }
-    .box small { font-size: 12px; margin-top: 4px; }
+  .countdown-wrapper { margin-top: 20px; }
+  .countdown-title { font-weight: bold; font-size: 18px; color: #2C2C2C; margin-bottom: 8px; }
+  .countdown-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .box {
+    background: white;
+    color: #2C2C2C;
+    padding: 10px 8px;
+    border-radius: 10px;
+    width: 48px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .box span { font-size: 20px; font-weight: bold; line-height: 1; }
+  .box small { font-size: 12px; margin-top: 4px; }
 
-    .buttons { margin-top: 30px; }
-    .btn {
-      display: block;
-      background-color: #FFFFFF;
-      color: #2C2C2C;
-      padding: 12px;
-      border-radius: 999px;
-      margin: 12px 0;
-      text-decoration: none;
-      font-weight: 400;
-      font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeInMoveUp 0.8s ease forwards;
-    }
-    .btn:hover { background-color: #f2f2f2; transform: scale(1.02); }
-    .btn.disabled {
-      background-color: #ccc !important;
-      color: #666 !important;
-      pointer-events: none;
-      box-shadow: none;
-    }
-    .fade-in { opacity: 0; transform: translateY(10px); animation: fadeInMoveUp 1s ease forwards; }
-    @keyframes fadeInMoveUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      50% { transform: translateX(4px); }
-      75% { transform: translateX(-4px); }
-    }
-    .btn.shake {
-      animation: fadeInMoveUp 0.8s ease forwards, shake 0.6s ease-in-out infinite;
-    }
-    .btn.active {
-      background-color: #F695BF; /* ← 你想要的開團顏色 */
-      color: white;
-      font-weight: bold;
-    }
-
+  .buttons { margin-top: 30px; }
+  .btn {
+    display: block;
+    background-color: #FFFFFF;
+    color: #2C2C2C;
+    padding: 12px;
+    border-radius: 999px;
+    margin: 12px 0;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInMoveUp 0.8s ease forwards;
+  }
+  .btn:hover { background-color: #f2f2f2; transform: scale(1.02); }
+  .btn.disabled {
+    background-color: #ccc !important;
+    color: #666 !important;
+    pointer-events: none;
+    box-shadow: none;
+  }
+  .fade-in { opacity: 0; transform: translateY(10px); animation: fadeInMoveUp 1s ease forwards; }
+  @keyframes fadeInMoveUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+  }
+  .btn.shake {
+    animation: fadeInMoveUp 0.8s ease forwards, shake 0.6s ease-in-out infinite;
+  }
+  .btn.active {
+    background-color: #F695BF;
+    color: white;
+    font-weight: bold;
+  }
   </style>
 </head>
+
 <body>
+  <!-- ✅ 加入背景音樂 -->
+  <audio id="bgMusic" autoplay muted loop>
+    <source src="top.mp3" type="audio/mpeg">
+    您的瀏覽器不支援音樂播放。
+  </audio>
+
   <div class="container fade-in" style="animation-delay: 0s;">
     <img src="top.jpg" alt="頭像" class="avatar fade-in" style="animation-delay: 0.1s;">
     <h1 class="fade-in" style="animation-delay: 0.2s;">小魚 Savina</h1>
@@ -114,8 +120,20 @@
     </div>
   </div>
 
+  <!-- ✅ 自動解除靜音撥放 -->
   <script>
-    const apiUrl = "https://script.google.com/macros/s/AKfycbxiOx_DqYwP7Jp4dUhoAo8OpJY06LFpTtWuZSutCnw3K7LfjJ4kqukdP6j7r_2VwjDC/exec"; // ← 請填入自己的網址
+    document.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      music.muted = false;
+      music.play().catch(err => {
+        console.log("⚠️ 自動播放失敗，可能需要點擊", err);
+      });
+    });
+  </script>
+
+  <!-- 你原本的倒數 + 按鈕邏輯 -->
+  <script>
+    const apiUrl = "https://script.google.com/macros/s/AKfycbxiOx_DqYwP7Jp4dUhoAo8OpJY06LFpTtWuZSutCnw3K7LfjJ4kqukdP6j7r_2VwjDC/exec";
     let startTime, endTime, cachedButtons = [];
 
     fetch(apiUrl)
@@ -193,22 +211,19 @@
           if (now < startTime) {
             el.textContent = btn.name;
             el.classList.add("disabled");
-            el.classList.remove("shake");
-            el.classList.remove("active");
+            el.classList.remove("shake", "active");
             el.removeAttribute("href");
           } else if (now > endTime) {
             el.textContent = btn.name;
             el.classList.add("disabled");
-            el.classList.remove("shake");
-            el.classList.remove("active");
+            el.classList.remove("shake", "active");
             el.removeAttribute("href");
           } else {
             el.textContent = btn.name;
             el.href = btn.url;
             el.target = "_blank";
             el.classList.remove("disabled");
-            el.classList.add("shake");
-            el.classList.add("active");
+            el.classList.add("shake", "active");
           }
         } else {
           el.textContent = btn.name;
