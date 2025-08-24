@@ -10,7 +10,7 @@
     background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('bg.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #2C2C2C;
-    margin: 0; 
+    margin: 0;
     padding: 0;
     text-align: center;
   }
@@ -20,14 +20,9 @@
   h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
   .email { color: #2C2C2C; font-size: 14px; margin-bottom: 15px; }
   .slogan { color: #2C2C2C; font-size: 16px; margin-top: 6px; line-height: 1.5; }
-
   .countdown-wrapper { margin-top: 20px; }
   .countdown-title { font-weight: bold; font-size: 18px; color: #2C2C2C; margin-bottom: 8px; }
-  .countdown-boxes {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
+  .countdown-boxes { display: flex; justify-content: center; gap: 10px; }
   .box {
     background: white;
     color: #2C2C2C;
@@ -41,7 +36,6 @@
   }
   .box span { font-size: 20px; font-weight: bold; line-height: 1; }
   .box small { font-size: 12px; margin-top: 4px; }
-
   .buttons { margin-top: 30px; }
   .btn {
     display: block;
@@ -67,9 +61,7 @@
     box-shadow: none;
   }
   .fade-in { opacity: 0; transform: translateY(10px); animation: fadeInMoveUp 1s ease forwards; }
-  @keyframes fadeInMoveUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeInMoveUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-4px); }
@@ -84,66 +76,81 @@
     color: white;
     font-weight: bold;
   }
+
+  /* 歡迎畫面樣式 */
+  #welcome {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+  #welcome h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  #welcome button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background: #f695bf;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
   </style>
 </head>
-
 <body>
-  <!-- ✅ 背景音樂 -->
-  <audio id="bgMusic" autoplay muted loop>
+  <!-- 🎵 音樂 -->
+  <audio id="bgMusic" loop>
     <source src="top.mp3" type="audio/mpeg">
     您的瀏覽器不支援音樂播放。
   </audio>
 
-  <div class="container fade-in" style="animation-delay: 0s;">
-    <img src="top.jpg" alt="頭像" class="avatar fade-in" style="animation-delay: 0.1s;">
-    <h1 class="fade-in" style="animation-delay: 0.2s;">小魚 Savina</h1>
-    <div class="email fade-in" style="animation-delay: 0.3s;">@fishsiao_</div>
-
-    <div class="slogan fade-in" style="animation-delay: 0.25s;">
-      讓質感日常變成習慣<br>
-      <span style="font-size: 14px;">Second-hand with Love 🤍</span>
-    </div>
-
-    <!-- 倒數 -->
-    <div class="countdown-wrapper fade-in" style="animation-delay: 0.35s;">
-      <div class="countdown-title" id="countdownTitle">開團倒數</div>
-      <div class="countdown-boxes" id="countdownBox">
-        <div class="box"><span id="days">00</span><small>天</small></div>
-        <div class="box"><span id="hours">00</span><small>時</small></div>
-        <div class="box"><span id="minutes">00</span><small>分</small></div>
-        <div class="box"><span id="seconds">00</span><small>秒</small></div>
-      </div>
-    </div>
-
-    <div class="buttons" id="buttons">
-      <div class="btn">載入中...</div>
-    </div>
-    <button 
-        onclick="document.getElementById('bgMusic').play()" 
-        style="margin-top:20px; padding:10px 20px; background-color:#F695BF; color:white; border:none; border-radius:999px; font-size:15px; cursor:pointer;"
-      >
-        ▶ 點我播放音樂
-      </button>
+  <!-- 🎉 歡迎畫面 -->
+  <div id="welcome">
+    <h2>歡迎來到小魚的小天地 🐟</h2>
+    <button onclick="enterSite()">點我進入</button>
   </div>
 
-  <!-- ✅ 音樂自動播放解鎖 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const music = document.getElementById("bgMusic");
-      if (music) {
-        music.muted = false;
-        const playAttempt = music.play();
-        if (playAttempt !== undefined) {
-          playAttempt
-            .then(() => console.log("✅ 背景音樂自動播放成功"))
-            .catch((err) => console.warn("⚠️ 自動播放失敗，需使用者互動", err));
-        }
-      }
-    });
-  </script>
+  <!-- 🏠 主內容區域 -->
+  <div id="mainContent" style="display: none;">
+    <div class="container fade-in" style="animation-delay: 0s;">
+      <img src="top.jpg" alt="頭像" class="avatar fade-in" style="animation-delay: 0.1s;">
+      <h1 class="fade-in" style="animation-delay: 0.2s;">小魚 Savina</h1>
+      <div class="email fade-in" style="animation-delay: 0.3s;">@fishsiao_</div>
+      <div class="slogan fade-in" style="animation-delay: 0.25s;">
+        讓質感日常變成習慣<br>
+        <span style="font-size: 14px;">Second-hand with Love 🧡</span>
+      </div>
+      <div class="countdown-wrapper fade-in" style="animation-delay: 0.35s;">
+        <div class="countdown-title" id="countdownTitle">開團倒數</div>
+        <div class="countdown-boxes" id="countdownBox">
+          <div class="box"><span id="days">00</span><small>天</small></div>
+          <div class="box"><span id="hours">00</span><small>時</small></div>
+          <div class="box"><span id="minutes">00</span><small>分</small></div>
+          <div class="box"><span id="seconds">00</span><small>秒</small></div>
+        </div>
+      </div>
+      <div class="buttons" id="buttons">
+        <div class="btn">載入中...</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- ✅ 倒數與按鈕邏輯 -->
   <script>
+    function enterSite() {
+      const music = document.getElementById("bgMusic");
+      music.muted = false;
+      music.play().catch(err => console.warn("音樂播放失敗：", err));
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+
     const apiUrl = "https://script.google.com/macros/s/AKfycbxiOx_DqYwP7Jp4dUhoAo8OpJY06LFpTtWuZSutCnw3K7LfjJ4kqukdP6j7r_2VwjDC/exec";
     let startTime, endTime, cachedButtons = [];
 
@@ -153,7 +160,6 @@
         startTime = new Date(data.startTime);
         endTime = new Date(data.endTime);
         cachedButtons = data.buttons;
-
         renderButtons();
         updateCountdownBox();
         setInterval(() => {
@@ -170,7 +176,6 @@
       const now = new Date();
       const box = document.getElementById("countdownBox");
       const title = document.getElementById("countdownTitle");
-
       if (now > endTime) {
         title.textContent = "📦 團購已結束";
         box.style.display = "none";
@@ -190,7 +195,6 @@
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
-
       const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
       el("days", days);
       el("hours", hours);
@@ -213,11 +217,9 @@
     function updateButtonStatus() {
       const now = new Date();
       const btnEls = document.querySelectorAll(".btn");
-
       cachedButtons.forEach((btn, idx) => {
         const el = btnEls[idx];
         if (!el) return;
-
         if (idx === 0) {
           if (now < startTime || now > endTime) {
             el.textContent = btn.name;
