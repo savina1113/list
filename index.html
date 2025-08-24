@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>小魚 SAVINA 個人連結頁</title>
   <style>
+    /* 原本的 CSS 保留，不變 */
     body {
       font-family: 'Arial', sans-serif;
       background: #FCE1E7;
@@ -13,59 +14,19 @@
       padding: 0;
       text-align: center;
     }
+    .container { padding: 20px; max-width: 500px; margin: auto; }
+    .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; margin-bottom: 10px; }
+    h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
+    .email { color: #2C2C2C; font-size: 14px; margin-bottom: 15px; }
+    .slogan { color: #2C2C2C; font-size: 16px; margin-top: 6px; line-height: 1.5; }
 
-    .container {
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid white;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      color: #2C2C2C;
-      margin: 5px 0;
-      font-size: 24px;
-    }
-
-    .email {
-      color: #2C2C2C;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .slogan {
-      color: #2C2C2C;
-      font-size: 16px;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    /* 倒數樣式 */
-    .countdown-wrapper {
-      margin-top: 20px;
-    }
-
-    .countdown-title {
-      font-weight: bold;
-      font-size: 18px;
-      color: #2C2C2C;
-      margin-bottom: 8px;
-    }
-
+    .countdown-wrapper { margin-top: 20px; }
+    .countdown-title { font-weight: bold; font-size: 18px; color: #2C2C2C; margin-bottom: 8px; }
     .countdown-boxes {
       display: flex;
       justify-content: center;
       gap: 10px;
     }
-
     .box {
       background: white;
       color: #2C2C2C;
@@ -77,22 +38,10 @@
       flex-direction: column;
       align-items: center;
     }
+    .box span { font-size: 20px; font-weight: bold; line-height: 1; }
+    .box small { font-size: 12px; margin-top: 4px; }
 
-    .box span {
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 1;
-    }
-
-    .box small {
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .buttons {
-      margin-top: 30px;
-    }
-
+    .buttons { margin-top: 30px; }
     .btn {
       display: block;
       background-color: #FFFFFF;
@@ -109,49 +58,17 @@
       transform: translateY(10px);
       animation: fadeInMoveUp 0.8s ease forwards;
     }
-
-    .buttons a:nth-child(1) {
-      animation-delay: 0.2s;
-      background-color: #F695BF;
-    }
-    .buttons a:nth-child(2) {
-      animation-delay: 0.4s;
-      background-color: #f2f2f2;
-    }
-    .buttons a:nth-child(3) {
-      animation-delay: 0.6s;
-      background-color: #fae6ef;
-    }
-    .buttons a:nth-child(4) {
-      animation-delay: 0.8s;
-      background-color: #f2f2f2;
-    }
-
-    .btn:hover {
-      background-color: #f2f2f2;
-      transform: scale(1.02);
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeInMoveUp 1s ease forwards;
-    }
-
+    .btn:hover { background-color: #f2f2f2; transform: scale(1.02); }
+    .fade-in { opacity: 0; transform: translateY(10px); animation: fadeInMoveUp 1s ease forwards; }
     @keyframes fadeInMoveUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-4px); }
       50% { transform: translateX(4px); }
       75% { transform: translateX(-4px); }
     }
-
     .btn.shake {
       animation: fadeInMoveUp 0.8s ease forwards, shake 0.6s ease-in-out infinite;
     }
@@ -168,10 +85,10 @@
       <span style="font-size: 14px;">Second-hand with Love 💕</span>
     </div>
 
-    <!-- 倒數計時器 -->
+    <!-- 倒數區 -->
     <div class="countdown-wrapper fade-in" style="animation-delay: 0.35s;">
-      <div class="countdown-title">開團倒數</div>
-      <div class="countdown-boxes">
+      <div class="countdown-title" id="countdownTitle">開團倒數</div>
+      <div class="countdown-boxes" id="countdownBox">
         <div class="box"><span id="days">00</span><small>天</small></div>
         <div class="box"><span id="hours">00</span><small>時</small></div>
         <div class="box"><span id="minutes">00</span><small>分</small></div>
@@ -179,41 +96,61 @@
       </div>
     </div>
 
-    <div class="buttons">
-      <a href="#" class="btn shake">🔥🔥冰絲涼感BRA TOP 8/26正式開團🔥🔥</a>
-      <a href="https://savina.1shop.tw/" class="btn">循環衣櫥二手衣</a>
-      <a href="https://instagram.com/fishsiao_" class="btn" target="_blank">instagram</a>
-      <a href="https://www.facebook.com/share/16zb1twzW5/?mibextid=wwXIfr" class="btn" target="_blank">臉書粉專</a>
+    <div class="buttons" id="buttons">
+      <div class="btn">🔄 載入中...</div>
     </div>
   </div>
 
   <script>
-    function updateCountdownBox() {
-      const target = new Date("2025-08-25T02:40:00+08:00");
-      const now = new Date();
-      const diff = target - now;
+    const apiUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLipF9DXGY6KxZIhHPZECsPpJebIcdEBDdj3GyOrW3hHuzYdS3SQOiSN6dxnXuZsLuKrNaKzR9ZCkDe8ykGWIDO8QdW-spM5dM2Vn5_Xql5xKr5pah7yebp76TSX_PGDiq0sd_iTdqcf__gU3Jcvdq_QedxOCGkI1Qed8uFozT__ms9-vw4Cg-D-PcRWJpHFcBMv5cuFaSidERYsRCbvEMoTFx923KVAWptl7Wx0qQPhDX21WmgY_L1I_7v9jO1u2LkNhkgBnqWFr0kSScL7rgXu3sDkPw&lib=MQ6bkrl169KI0EvClC7gaix5zVf8WQ9dC"; // 替換為你自己的
 
-      const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        // 處理倒數
+        const startTime = new Date(data.startTime);
+        function updateCountdownBox() {
+          const now = new Date();
+          const diff = startTime - now;
 
-      if (diff <= 0) {
-        document.querySelector('.countdown-title').textContent = "🎉 團購已開跑！";
-        document.querySelector('.countdown-boxes').style.display = "none";
-        return;
-      }
+          if (diff <= 0) {
+            document.getElementById("countdownTitle").textContent = "🎉 團購已開跑！";
+            document.getElementById("countdownBox").style.display = "none";
+            return;
+          }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
 
-      el("days", days);
-      el("hours", hours);
-      el("minutes", minutes);
-      el("seconds", seconds);
-    }
+          const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
+          el("days", days);
+          el("hours", hours);
+          el("minutes", minutes);
+          el("seconds", seconds);
+        }
+        updateCountdownBox();
+        setInterval(updateCountdownBox, 1000);
 
-    updateCountdownBox();
-    setInterval(updateCountdownBox, 1000);
+        // 動態按鈕
+        const container = document.getElementById("buttons");
+        container.innerHTML = "";
+        data.buttons.forEach((btn, idx) => {
+          const a = document.createElement("a");
+          a.className = "btn fade-in";
+          a.href = btn.url;
+          a.textContent = btn.name;
+          a.style.animationDelay = `${0.2 + idx * 0.2}s`;
+          a.target = "_blank";
+          if (idx === 0) a.classList.add("shake"); // 第一個加閃動
+          container.appendChild(a);
+        });
+      })
+      .catch(err => {
+        document.getElementById("buttons").innerHTML = '<div class="btn">❌ 載入失敗</div>';
+        console.error("載入錯誤", err);
+      });
   </script>
 </body>
 </html>
