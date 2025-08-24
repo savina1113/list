@@ -106,27 +106,51 @@
     </div>
   </div>
 
-  <script>
-    const apiUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLipF9DXGY6KxZIhHPZECsPpJebIcdEBDdj3GyOrW3hHuzYdS3SQOiSN6dxnXuZsLuKrNaKzR9ZCkDe8ykGWIDO8QdW-spM5dM2Vn5_Xql5xKr5pah7yebp76TSX_PGDiq0sd_iTdqcf__gU3Jcvdq_QedxOCGkI1Qed8uFozT__ms9-vw4Cg-D-PcRWJpHFcBMv5cuFaSidERYsRCbvEMoTFx923KVAWptl7Wx0qQPhDX21WmgY_L1I_7v9jO1u2LkNhkgBnqWFr0kSScL7rgXu3sDkPw&lib=MQ6bkrl169KI0EvClC7gaix5zVf8WQ9dC";
+<script>
+  const apiUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLipF9DXGY6KxZIhHPZECsPpJebIcdEBDdj3GyOrW3hHuzYdS3SQOiSN6dxnXuZsLuKrNaKzR9ZCkDe8ykGWIDO8QdW-spM5dM2Vn5_Xql5xKr5pah7yebp76TSX_PGDiq0sd_iTdqcf__gU3Jcvdq_QedxOCGkI1Qed8uFozT__ms9-vw4Cg-D-PcRWJpHFcBMv5cuFaSidERYsRCbvEMoTFx923KVAWptl7Wx0qQPhDX21WmgY_L1I_7v9jO1u2LkNhkgBnqWFr0kSScL7rgXu3sDkPw&lib=MQ6bkrl169KI0EvClC7gaix5zVf8WQ9dC";
 
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        const startTime = new Date(data.startTime);
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      const startTime = new Date(data.startTime);
+      const endTime = new Date(data.endTime);
+      const now = new Date();
+
+      const isBeforeStart = now < startTime;
+      const isAfterEnd = now > endTime;
+      const isDuring = now >= startTime && now <= endTime;
+
+      // 更新倒數顯示
+      function updateCountdownBox() {
         const now = new Date();
 
-        // 更新倒數
-        function updateCountdownBox() {
-          const diff = startTime - new Date();
-          if (diff <= 0) {
-            document.getElementById("countdownTitle").textContent = "🎉 團購已開跑！";
-            document.getElementById("countdownBox").style.display = "none";
-            return;
-          }
+        if (isAfterEnd) {
+          document.getElementById("countdownTitle").textContent = "📦 團購已結束";
+          document.getElementById("countdownBox").style.display = "none";
+        } else if (isBeforeStart) {
+          const diff = startTime - now;
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
           const minutes = Math.floor((diff / (1000 * 60)) % 60);
           const seconds = Math.floor((diff / 1000) % 60);
+
+          document.getElementById("countdownTitle").textContent = "⏳ 開團倒數";
+          document.getElementById("countdownBox").style.display = "flex";
+
+          const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
+          el("days", days);
+          el("hours", hours);
+          el("minutes", minutes);
+          el("seconds", seconds);
+        } else {
+          const remain = endTime - now;
+          const days = Math.floor(remain / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((remain / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((remain / (1000 * 60)) % 60);
+          const seconds = Math.floor((remain / 1000) % 60);
+
+          document.getElementById("countdownTitle").textContent = "🎉 團購倒數中";
+          document.getElementById("countdownBox").style.display = "flex";
 
           const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
           el("days", days);
@@ -134,37 +158,46 @@
           el("minutes", minutes);
           el("seconds", seconds);
         }
-        updateCountdownBox();
-        setInterval(updateCountdownBox, 1000);
+      }
 
-        // 動態按鈕產生
-        const container = document.getElementById("buttons");
-        container.innerHTML = "";
-        const isBeforeStart = now < startTime;
+      updateCountdownBox();
+      setInterval(updateCountdownBox, 1000);
 
-        data.buttons.forEach((btn, idx) => {
-          const a = document.createElement("a");
-          a.className = "btn fade-in";
-          a.style.animationDelay = `${0.2 + idx * 0.2}s`;
+      // 按鈕渲染
+      const container = document.getElementById("buttons");
+      container.innerHTML = "";
 
-          if (idx === 0 && isBeforeStart) {
-            a.textContent = "🔥🔥冰絲涼感BRA TOP 8/26正式開團🔥🔥";
+      data.buttons.forEach((btn, idx) => {
+        const a = document.createElement("a");
+        a.className = "btn fade-in";
+        a.style.animationDelay = `${0.2 + idx * 0.2}s`;
+
+        // 第 1 個按鈕邏輯
+        if (idx === 0) {
+          if (isBeforeStart || isAfterEnd) {
+            a.textContent = btn.name + (isBeforeStart ? "（尚未開團）" : "（已結束）");
             a.classList.add("disabled");
           } else {
             a.href = btn.url;
             a.target = "_blank";
             a.textContent = btn.name;
+            a.classList.add("shake");
           }
+        } else {
+          // 其他按鈕永遠可點
+          a.href = btn.url;
+          a.target = "_blank";
+          a.textContent = btn.name;
+        }
 
-          if (idx === 0 && !isBeforeStart) a.classList.add("shake");
-
-          container.appendChild(a);
-        });
-      })
-      .catch(err => {
-        document.getElementById("buttons").innerHTML = '<div class="btn">❌ 載入失敗</div>';
-        console.error("載入錯誤", err);
+        container.appendChild(a);
       });
-  </script>
+    })
+    .catch(err => {
+      document.getElementById("buttons").innerHTML = '<div class="btn">❌ 載入失敗</div>';
+      console.error("載入錯誤", err);
+    });
+</script>
+
 </body>
 </html>
