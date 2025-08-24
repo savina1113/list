@@ -88,7 +88,7 @@
 </head>
 
 <body>
-  <!-- ✅ 加入背景音樂 -->
+  <!-- ✅ 背景音樂 -->
   <audio id="bgMusic" autoplay muted loop>
     <source src="top.mp3" type="audio/mpeg">
     您的瀏覽器不支援音樂播放。
@@ -120,18 +120,23 @@
     </div>
   </div>
 
-  <!-- ✅ 自動解除靜音撥放 -->
+  <!-- ✅ 音樂自動播放解鎖 -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("bgMusic");
-      music.muted = false;
-      music.play().catch(err => {
-        console.log("⚠️ 自動播放失敗，可能需要點擊", err);
-      });
+      if (music) {
+        music.muted = false;
+        const playAttempt = music.play();
+        if (playAttempt !== undefined) {
+          playAttempt
+            .then(() => console.log("✅ 背景音樂自動播放成功"))
+            .catch((err) => console.warn("⚠️ 自動播放失敗，需使用者互動", err));
+        }
+      }
     });
   </script>
 
-  <!-- 你原本的倒數 + 按鈕邏輯 -->
+  <!-- ✅ 倒數與按鈕邏輯 -->
   <script>
     const apiUrl = "https://script.google.com/macros/s/AKfycbxiOx_DqYwP7Jp4dUhoAo8OpJY06LFpTtWuZSutCnw3K7LfjJ4kqukdP6j7r_2VwjDC/exec";
     let startTime, endTime, cachedButtons = [];
@@ -208,12 +213,7 @@
         if (!el) return;
 
         if (idx === 0) {
-          if (now < startTime) {
-            el.textContent = btn.name;
-            el.classList.add("disabled");
-            el.classList.remove("shake", "active");
-            el.removeAttribute("href");
-          } else if (now > endTime) {
+          if (now < startTime || now > endTime) {
             el.textContent = btn.name;
             el.classList.add("disabled");
             el.classList.remove("shake", "active");
@@ -231,25 +231,6 @@
           el.target = "_blank";
         }
       });
-      // 音樂自動播放控制（解決自動播放被禁止問題）
-    document.addEventListener("DOMContentLoaded", () => {
-      const music = document.getElementById("bgMusic");
-      if (music) {
-        music.muted = false; // 確保不是靜音狀態
-        const playAttempt = music.play();
-    
-        if (playAttempt !== undefined) {
-          playAttempt
-            .then(() => {
-              console.log("✅ 背景音樂自動播放成功");
-            })
-            .catch((error) => {
-              console.warn("⚠️ 自動播放失敗，需使用者互動", error);
-            });
-        }
-      }
-    });
-
     }
   </script>
 </body>
