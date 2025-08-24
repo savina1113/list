@@ -48,12 +48,23 @@
       line-height: 1.5;
     }
 
-    .countdown {
-      margin-top: 20px;
-      color: #D44B8C;
+    .countdown-container {
+      margin-top: 16px;
+      padding: 12px 20px;
+      border-radius: 16px;
+      background-color: white;
+      display: inline-block;
+      color: #2C2C2C;
       font-size: 16px;
       font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       animation: fadeInMoveUp 1s ease forwards;
+    }
+
+    .countdown-container span {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 4px;
     }
 
     .buttons {
@@ -77,7 +88,6 @@
       animation: fadeInMoveUp 0.8s ease forwards;
     }
 
-    /* 每個按鈕延遲淡入 + 跳色背景 */
     .buttons a:nth-child(1) {
       animation-delay: 0.2s;
       background-color: #F695BF;
@@ -100,7 +110,6 @@
       transform: scale(1.02);
     }
 
-    /* 淡入動畫 */
     .fade-in {
       opacity: 0;
       transform: translateY(10px);
@@ -114,7 +123,6 @@
       }
     }
 
-    /* 左右搖晃動畫 */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-4px); }
@@ -138,9 +146,9 @@
       <span style="font-size: 14px;">Second-hand with Love 💕</span>
     </div>
 
-    <!-- ⏳ 倒數計時區塊 -->
-    <div id="countdown" class="countdown fade-in" style="animation-delay: 0.35s;">
-      ⏳ 距離開團只剩下 …
+    <!-- 倒數計時器 -->
+    <div class="countdown-container fade-in" style="animation-delay: 0.35s;">
+      <span id="countdown-text">⏳ 倒數中...</span>
     </div>
 
     <div class="buttons">
@@ -151,16 +159,15 @@
     </div>
   </div>
 
-  <!-- ⏳ 倒數計時功能 -->
   <script>
     function updateCountdown() {
-      const countdown = document.getElementById("countdown");
-      const targetDate = new Date("2025-08-26T00:00:00+08:00"); // 調整倒數截止時間
+      const countdownText = document.getElementById("countdown-text");
+      const targetDate = new Date("2025-08-26T00:00:00+08:00");
       const now = new Date();
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        countdown.innerHTML = "🎉 團購正式開跑啦！";
+        countdownText.textContent = "🎉 團購正式開跑啦！";
         return;
       }
 
@@ -169,7 +176,8 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdown.innerHTML = `⏳ 距離開團只剩 ${days} 天 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+      countdownText.innerHTML =
+        `⏳ 距離開團只剩 <span>${days}</span> 天 <span>${hours}</span> 時 <span>${minutes}</span> 分 <span>${seconds}</span> 秒`;
     }
 
     updateCountdown();
