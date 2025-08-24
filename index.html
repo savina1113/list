@@ -96,57 +96,81 @@
     justify-content: center;
     z-index: 9999;
     animation: welcomeBgBlur 1.5s ease forwards;
-    backdrop-filter: blur(10px);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
-  /* 背景模糊淡入 */
-  @keyframes welcomeBgBlur {
-    from { filter: blur(15px); opacity: 0; }
-    to { filter: blur(0); opacity: 1; }
+  /* 半透明黑色遮罩 */
+  #welcome .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1;
   }
 
-  /* 歡迎頁 Logo，套用 avatar 樣式 + 動畫 */
-  .logo {
+  /* Logo 保持與主頁一致 */
+  #welcome .logo {
+    position: relative;
+    z-index: 2;
     opacity: 0;
     transform: scale(0.5);
     animation: logoFadeIn 1.2s ease forwards;
     animation-delay: 0.3s;
   }
 
+  /* 品牌標題 */
+  #welcome h2 {
+    position: relative;
+    z-index: 2;
+    font-size: 28px;
+    margin-top: 20px;
+    color: white;
+    opacity: 0;
+    animation: textFade 1s ease forwards;
+    animation-delay: 0.8s;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+  }
+
+  /* Tagline */
+  #welcome .tagline {
+    position: relative;
+    z-index: 2;
+    margin-top: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 0;
+    animation: textFade 1.2s ease-in forwards;
+    animation-delay: 1.4s;
+  }
+
+  /* Tap to Enter 提示 */
+  #welcome .enter-tip {
+    position: relative;
+    z-index: 2;
+    margin-top: 40px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    animation: blink 1.5s infinite;
+  }
+
+  /* 動畫 */
   @keyframes logoFadeIn {
     to {
       opacity: 1;
       transform: scale(1);
     }
   }
-
-  /* 標題與提示 */
-  #welcome h2 {
-    font-size: 24px;
-    margin-top: 20px;
-    color: white;
-    opacity: 0;
-    animation: textFade 1s ease forwards;
-    animation-delay: 0.8s;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  }
-
-  #welcome span {
-    margin-top: 12px;
-    font-size: 14px;
-    color: rgba(255,255,255,0.8);
-    opacity: 0;
-    animation: textFade 1.2s ease-in forwards;
-    animation-delay: 1.4s;
-  }
-
   @keyframes textFade {
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes blink {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
 
-  /* 淡出動畫 */
+  /* 歡迎頁淡出 */
   #welcome.fade-out {
     opacity: 0;
     transform: scale(1.1);
@@ -163,9 +187,11 @@
 
   <!-- 🎉 歡迎頁 -->
   <div id="welcome" onclick="enterSite()">
+    <div class="overlay"></div>
     <img src="top.jpg" alt="Logo" class="avatar logo">
-    <h2>歡迎來到小魚的小天地 🐟</h2>
-    <span>點擊螢幕進入</span>
+    <h2>Savina</h2>
+    <span class="tagline">Second-hand with Love 🧡</span>
+    <small class="enter-tip">Tap to Enter</small>
   </div>
 
   <!-- 🏠 主內容 -->
