@@ -142,7 +142,7 @@
         box.style.display = "flex";
         renderTimeDiff(startTime - now);
       } else {
-        title.textContent = "🎉 團購倒數中";
+        title.textContent = "🎉 團購結束倒數";
         box.style.display = "flex";
         renderTimeDiff(endTime - now);
       }
@@ -183,12 +183,12 @@
 
         if (idx === 0) {
           if (now < startTime) {
-            el.textContent = btn.name + "（尚未開團）";
+            el.textContent = btn.name;
             el.classList.add("disabled");
             el.classList.remove("shake");
             el.removeAttribute("href");
           } else if (now > endTime) {
-            el.textContent = btn.name + "（已結束）";
+            el.textContent = btn.name;
             el.classList.add("disabled");
             el.classList.remove("shake");
             el.removeAttribute("href");
