@@ -13,12 +13,7 @@
       padding: 0;
       text-align: center;
     }
-    .slogan {
-      color: #2C2C2C;
-      font-size: 16px;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
+
     .container {
       padding: 20px;
       max-width: 500px;
@@ -46,6 +41,21 @@
       margin-bottom: 15px;
     }
 
+    .slogan {
+      color: #2C2C2C;
+      font-size: 16px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .countdown {
+      margin-top: 20px;
+      color: #D44B8C;
+      font-size: 16px;
+      font-weight: bold;
+      animation: fadeInMoveUp 1s ease forwards;
+    }
+
     .buttons {
       margin-top: 30px;
     }
@@ -67,20 +77,20 @@
       animation: fadeInMoveUp 0.8s ease forwards;
     }
 
-    /* 每個按鈕延遲淡入 */
-    .buttons a:nth-child(1) { 
+    /* 每個按鈕延遲淡入 + 跳色背景 */
+    .buttons a:nth-child(1) {
       animation-delay: 0.2s;
       background-color: #F695BF;
     }
-    .buttons a:nth-child(2) { 
+    .buttons a:nth-child(2) {
       animation-delay: 0.4s;
       background-color: #f2f2f2;
     }
-    .buttons a:nth-child(3) { 
+    .buttons a:nth-child(3) {
       animation-delay: 0.6s;
       background-color: #fae6ef;
     }
-    .buttons a:nth-child(4) { 
+    .buttons a:nth-child(4) {
       animation-delay: 0.8s;
       background-color: #f2f2f2;
     }
@@ -90,7 +100,7 @@
       transform: scale(1.02);
     }
 
-    /* 整體淡入動畫 */
+    /* 淡入動畫 */
     .fade-in {
       opacity: 0;
       transform: translateY(10px);
@@ -104,7 +114,7 @@
       }
     }
 
-    /* 加入左右晃動動畫 */
+    /* 左右搖晃動畫 */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-4px); }
@@ -122,9 +132,15 @@
     <img src="top.jpg" alt="頭像" class="avatar fade-in" style="animation-delay: 0.1s;">
     <h1 class="fade-in" style="animation-delay: 0.2s;">小魚 Savina</h1>
     <div class="email fade-in" style="animation-delay: 0.3s;">@fishsiao_</div>
+
     <div class="slogan fade-in" style="animation-delay: 0.25s;">
       讓質感日常變成習慣<br>
       <span style="font-size: 14px;">Second-hand with Love 💕</span>
+    </div>
+
+    <!-- ⏳ 倒數計時區塊 -->
+    <div id="countdown" class="countdown fade-in" style="animation-delay: 0.35s;">
+      ⏳ 距離開團只剩下 …
     </div>
 
     <div class="buttons">
@@ -134,5 +150,30 @@
       <a href="https://www.facebook.com/share/16zb1twzW5/?mibextid=wwXIfr" class="btn" target="_blank">臉書粉專</a>
     </div>
   </div>
+
+  <!-- ⏳ 倒數計時功能 -->
+  <script>
+    function updateCountdown() {
+      const countdown = document.getElementById("countdown");
+      const targetDate = new Date("2025-08-26T00:00:00+08:00"); // 調整倒數截止時間
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdown.innerHTML = "🎉 團購正式開跑啦！";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdown.innerHTML = `⏳ 距離開團只剩 ${days} 天 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
