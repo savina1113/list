@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>小魚 SAVINA 個人連結頁</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: #FCE1E7;
-      color: white;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #2C2C2C;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
     .container { padding: 20px; max-width: 500px; margin: auto; }
     .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; margin-bottom: 10px; }
     h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
@@ -56,7 +58,6 @@
       opacity: 0;
       transform: translateY(10px);
       animation: fadeInMoveUp 0.8s ease forwards;
-      opacity: 0.3;
     }
     .btn:hover { background-color: #f2f2f2; transform: scale(1.02); }
     .btn.disabled {
