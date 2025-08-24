@@ -48,23 +48,45 @@
       line-height: 1.5;
     }
 
-    .countdown-container {
-      margin-top: 16px;
-      padding: 12px 20px;
-      border-radius: 16px;
-      background-color: white;
-      display: inline-block;
-      color: #2C2C2C;
-      font-size: 16px;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      animation: fadeInMoveUp 1s ease forwards;
+    /* 倒數樣式 */
+    .countdown-wrapper {
+      margin-top: 20px;
     }
 
-    .countdown-container span {
+    .countdown-title {
+      font-weight: bold;
+      font-size: 18px;
+      color: #2C2C2C;
+      margin-bottom: 8px;
+    }
+
+    .countdown-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .box {
+      background: white;
+      color: #2C2C2C;
+      padding: 10px 8px;
+      border-radius: 10px;
+      width: 48px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box span {
       font-size: 20px;
       font-weight: bold;
-      margin: 0 4px;
+      line-height: 1;
+    }
+
+    .box small {
+      font-size: 12px;
+      margin-top: 4px;
     }
 
     .buttons {
@@ -147,8 +169,14 @@
     </div>
 
     <!-- 倒數計時器 -->
-    <div class="countdown-container fade-in" style="animation-delay: 0.35s;">
-      <span id="countdown-text">⏳ 倒數中...</span>
+    <div class="countdown-wrapper fade-in" style="animation-delay: 0.35s;">
+      <div class="countdown-title">開團倒數</div>
+      <div class="countdown-boxes">
+        <div class="box"><span id="days">00</span><small>天</small></div>
+        <div class="box"><span id="hours">00</span><small>時</small></div>
+        <div class="box"><span id="minutes">00</span><small>分</small></div>
+        <div class="box"><span id="seconds">00</span><small>秒</small></div>
+      </div>
     </div>
 
     <div class="buttons">
@@ -160,14 +188,16 @@
   </div>
 
   <script>
-    function updateCountdown() {
-      const countdownText = document.getElementById("countdown-text");
-      const targetDate = new Date("2025-08-26T00:00:00+08:00");
+    function updateCountdownBox() {
+      const target = new Date("2025-08-26T00:00:00+08:00");
       const now = new Date();
-      const diff = targetDate - now;
+      const diff = target - now;
+
+      const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
 
       if (diff <= 0) {
-        countdownText.textContent = "🎉 團購正式開跑啦！";
+        document.querySelector('.countdown-title').textContent = "🎉 團購已開跑！";
+        document.querySelector('.countdown-boxes').style.display = "none";
         return;
       }
 
@@ -176,12 +206,14 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownText.innerHTML =
-        `⏳ 距離開團只剩 <span>${days}</span> 天 <span>${hours}</span> 時 <span>${minutes}</span> 分 <span>${seconds}</span> 秒`;
+      el("days", days);
+      el("hours", hours);
+      el("minutes", minutes);
+      el("seconds", seconds);
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    updateCountdownBox();
+    setInterval(updateCountdownBox, 1000);
   </script>
 </body>
 </html>
