@@ -89,13 +89,24 @@
   #welcome {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('bg3.jpg') center center / cover no-repeat;
+    background: transparent; /* 讓 Lottie 動畫可見 */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     transition: opacity 0.8s ease, transform 0.8s ease;
+    overflow: hidden;
+  }
+
+  /* Lottie 動畫容器 */
+  #welcome #lottie-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* 不影響點擊 */
   }
 
   /* 半透明黑色遮罩 */
@@ -193,6 +204,8 @@
 
   <!-- 🎉 歡迎頁 -->
   <div id="welcome" onclick="enterSite()">
+    <!-- Lottie 動畫 -->
+    <div id="lottie-bg"></div>
     <div class="overlay"></div>
     <img src="top.jpg" alt="Logo" class="avatar logo">
     <h2>Savina</h2>
@@ -225,7 +238,18 @@
     </div>
   </div>
 
+  <!-- Lottie 官方 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js"></script>
   <script>
+    // 初始化 Lottie 動畫
+    lottie.loadAnimation({
+      container: document.getElementById('lottie-bg'),
+      renderer: 'svg',
+      loop: false,           // 播放一次
+      autoplay: true,
+      path: 'Scene.json'     // 放在和 top.jpg 同資料夾
+    });
+
     function enterSite() {
       const music = document.getElementById("bgMusic");
       music.muted = false;
@@ -327,8 +351,3 @@
           el.href = btn.url;
           el.target = "_blank";
         }
-      });
-    }
-  </script>
-</body>
-</html>
