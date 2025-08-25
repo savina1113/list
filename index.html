@@ -99,21 +99,21 @@
     overflow: hidden;
   }
 
-  /* === 讓 Lottie 背景滿版 === */
+  /* Lottie 動畫容器 */
   #welcome #lottie-bg {
     position: absolute;
-    top: 0; left: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    pointer-events: none;
+    pointer-events: none; /* 不影響點擊 */
   }
 
   /* 半透明黑色遮罩 */
   #welcome .overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.35);
     z-index: 1;
   }
 
@@ -124,7 +124,7 @@
     opacity: 0;
     transform: scale(0.5);
     animation: logoFadeIn 1s ease forwards;
-    animation-delay: 4.2s;
+    animation-delay: 0.2s;
   }
 
   /* 品牌標題 */
@@ -136,7 +136,7 @@
     color: white;
     opacity: 0;
     animation: titleFadeIn 1s ease forwards;
-    animation-delay: 5s;
+    animation-delay: 1s;
     letter-spacing: 2px;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
     font-weight: bold;
@@ -151,7 +151,7 @@
     color: rgba(255, 255, 255, 0.85);
     opacity: 0;
     animation: taglineFadeIn 0.8s ease-in forwards;
-    animation-delay: 5.8s;
+    animation-delay: 1.8s;
   }
 
   /* Tap to Enter 提示 */
@@ -163,7 +163,7 @@
     color: rgba(255, 255, 255, 0.6);
     opacity: 0;
     animation: enterTipFadeIn 1s ease forwards, blink 1.5s infinite;
-    animation-delay: 6.6s;
+    animation-delay: 2.6s;
   }
 
   /* 動畫 */
@@ -247,10 +247,7 @@
       renderer: 'svg',
       loop: false,           // 只播放一次
       autoplay: true,
-      path: 'Scene.json',
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'  // 🔹 讓背景滿版
-      }
+      path: 'Scene.json'     // 放在和 top.jpg 同資料夾
     });
 
     function enterSite() {
@@ -265,6 +262,96 @@
         welcome.style.display = "none";
         document.getElementById("mainContent").style.display = "block";
       }, 800);
+    }
+
+    const apiUrl = "https://script.google.com/macros/s/AKfycbxiOx_DqYwP7Jp4dUhoAo8OpJY06LFpTtWuZSutCnw3K7LfjJ4kqukdP6j7r_2VwjDC/exec";
+    let startTime, endTime, cachedButtons = [];
+
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        startTime = new Date(data.startTime);
+        endTime = new Date(data.endTime);
+        cachedButtons = data.buttons;
+        renderButtons();
+        updateCountdownBox();
+        setInterval(() => {
+          updateCountdownBox();
+          updateButtonStatus();
+        }, 1000);
+      })
+      .catch(err => {
+        document.getElementById("buttons").innerHTML = '<div class="btn">❌ 載入失敗</div>';
+        console.error("載入錯誤", err);
+      });
+
+    function updateCountdownBox() {
+      const now = new Date();
+      const box = document.getElementById("countdownBox");
+      const title = document.getElementById("countdownTitle");
+      if (now > endTime) {
+        title.textContent = "📦 團購已結束";
+        box.style.display = "none";
+      } else if (now < startTime) {
+        title.textContent = "⏳ 開團倒數";
+        box.style.display = "flex";
+        renderTimeDiff(startTime - now);
+      } else {
+        title.textContent = "🎉 團購結束倒數";
+        box.style.display = "flex";
+        renderTimeDiff(endTime - now);
+      }
+    }
+
+    function renderTimeDiff(diff) {
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      const el = (id, val) => document.getElementById(id).textContent = val.toString().padStart(2, '0');
+      el("days", days);
+      el("hours", hours);
+      el("minutes", minutes);
+      el("seconds", seconds);
+    }
+
+    function renderButtons() {
+      const container = document.getElementById("buttons");
+      container.innerHTML = "";
+      cachedButtons.forEach((btn, idx) => {
+        const a = document.createElement("a");
+        a.className = "btn fade-in";
+        a.style.animationDelay = `${0.2 + idx * 0.2}s`;
+        container.appendChild(a);
+      });
+      updateButtonStatus();
+    }
+
+    function updateButtonStatus() {
+      const now = new Date();
+      const btnEls = document.querySelectorAll(".btn");
+      cachedButtons.forEach((btn, idx) => {
+        const el = btnEls[idx];
+        if (!el) return;
+        if (idx === 0) {
+          if (now < startTime || now > endTime) {
+            el.textContent = btn.name;
+            el.classList.add("disabled");
+            el.classList.remove("shake", "active");
+            el.removeAttribute("href");
+          } else {
+            el.textContent = btn.name;
+            el.href = btn.url;
+            el.target = "_blank";
+            el.classList.remove("disabled");
+            el.classList.add("shake", "active");
+          }
+        } else {
+          el.textContent = btn.name;
+          el.href = btn.url;
+          el.target = "_blank";
+        }
+      });
     }
   </script>
 </body>
