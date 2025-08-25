@@ -100,15 +100,21 @@
   }
 
   /* Lottie 動畫容器 */
-  #welcome #lottie-bg {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+   #welcome #lottie-bg {
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none; /* 不阻擋點擊 */
+      overflow: hidden;
+  }
+    #welcome #lottie-bg svg {
     width: 100%;
     height: 100%;
-    z-index: 0;
-    pointer-events: none; /* 不影響點擊 */
-  }
-
+    object-fit: cover;  /* 避免被拉伸 */
+}
   /* 半透明黑色遮罩 */
   #welcome .overlay {
     position: absolute;
