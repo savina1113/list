@@ -16,13 +16,13 @@
   }
 
   .container { padding: 20px; max-width: 500px; margin: auto; }
-  .avatar { 
-    width: 120px; 
-    height: 120px; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    border: 4px solid white; 
-    margin-bottom: 10px; 
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    margin-bottom: 10px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   }
   h1 { color: #2C2C2C; margin: 5px 0; font-size: 24px; }
@@ -89,7 +89,7 @@
   #welcome {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: transparent; /* 讓 Lottie 動畫可見 */
+    background: transparent; /* 背景透明讓 Lottie 可見 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -245,7 +245,7 @@
     lottie.loadAnimation({
       container: document.getElementById('lottie-bg'),
       renderer: 'svg',
-      loop: false,           // 播放一次
+      loop: false,           // 只播放一次
       autoplay: true,
       path: 'Scene.json'     // 放在和 top.jpg 同資料夾
     });
@@ -351,3 +351,8 @@
           el.href = btn.url;
           el.target = "_blank";
         }
+      });
+    }
+  </script>
+</body>
+</html>
