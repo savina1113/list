@@ -300,7 +300,7 @@
         box.style.display = "flex";
         renderTimeDiff(startTime - now);
       } else {
-        title.textContent = "🎉 團購結束倒數";
+        title.innerHTML = "🎉 團購結束倒數<br><span style='font-size:14px;color:#f695bf;'>折扣碼：fish</span>";
         box.style.display = "flex";
         renderTimeDiff(endTime - now);
       }
